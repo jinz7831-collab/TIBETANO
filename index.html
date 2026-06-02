@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alfredo Tibetano | Energía Mística Zen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --gold-mystic: #c9a15c; 
+            --gold-bright: #ffea00;
+            --soft-neon-green: rgba(74, 222, 128, 0.25); /* Verde neón extra suave */
+            --mystic-green: #4ade80; 
+            --glass: rgba(0, 0, 0, 0.75);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #000;
+            color: white;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- FONDOS --- */
+        .background {
+            position: fixed;
+            inset: 0;
+            background: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070') center/cover no-repeat;
+            z-index: -3;
+        }
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.95) 100%);
+            z-index: -2;
+        }
+
+        /* --- ORO CAYENDO --- */
+        .gold-rain-container {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.25;
+        }
+
+        .gold-particle {
+            position: absolute;
+            top: -10vh;
+            width: 3px;
+            height: 3px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--gold-bright);
+            animation: fallGold linear infinite;
+        }
+
+        @keyframes fallGold {
+            0% { transform: translateY(0vh) rotate(0deg) scale(0.5); opacity: 0; }
+            10% { opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg) scale(1); opacity: 0; }
+        }
+
+        .main-container {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 5px 20px;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        /* --- ANILLOS MÁGICOS --- */
+        .magic-viewport {
+            position: relative;
+            width: 320px;
+            height: 320px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: -10px;
+        }
+
+        .magic-ring {
+            position: absolute;
+            border-radius: 50%;
+            background: transparent;
+            background-image: conic-gradient(transparent, var(--gold-bright), var(--gold-mystic), transparent 70%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .ring-outer { width: 300px; height: 300px; border: 4px solid transparent; animation: rotateRight 25s linear infinite; }
+        .ring-inner { width: 260px; height: 260px; border: 3px solid transparent; animation: rotateLeft 18s linear infinite; }
+
+        @keyframes rotateRight { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes rotateLeft { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
+
+        .main-logo {
+            position: relative;
+            z-index: 5;
+            width: 190px;
+            height: auto;
+            filter: drop-shadow(0 0 20px rgba(255, 234, 0, 0.6)) brightness(1.2);
+            animation: logoAppear 2s ease-out forwards;
+        }
+
+        /* --- CABECERAS CON NEÓN VERDE SUAVEEEEE --- */
+        .section-tag {
+            background: rgba(255, 255, 255, 0.08); 
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 5px 25px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 12px;
+            backdrop-filter: blur(5px);
+            /* Sombra negra para legibilidad y Neón Verde muy suave detrás */
+            text-shadow: 1px 1px 2px #000;
+            box-shadow: 0 0 15px var(--soft-neon-green), inset 0 0 8px var(--soft-neon-green);
+        }
+
+        /* --- FRASE CON NEÓN VERDE --- */
+        .phrase {
+            font-size: 1rem;
+            font-style: italic;
+            color: #fff; 
+            text-align: center;
+            padding-bottom: 30px;
+            max-width: 500px;
+            text-shadow: 0 0 10px var(--mystic-green), 0 0 20px rgba(74, 222, 128, 0.4);
+            animation: auraPulse 3s infinite alternate;
+        }
+
+        @keyframes auraPulse {
+            from { text-shadow: 0 0 8px var(--mystic-green); }
+            to { text-shadow: 0 0 15px var(--mystic-green), 0 0 25px rgba(74, 222, 128, 0.6); }
+        }
+
+        /* TESTIMONIOS Y REDES CON AURA VERDE SUAVE */
+        #testimonial-area { width: 100%; max-width: 600px; margin-bottom: 25px; text-align: center; }
+        .testimonial-card {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-left: 4px solid var(--gold-bright);
+            padding: 15px 20px;
+            border-radius: 12px;
+            /* Neón suave detrás de la caja */
+            box-shadow: 0 5px 20px rgba(74, 222, 128, 0.15);
+        }
+        .testimonial-card p { font-size: 0.88rem; font-style: italic; color: #fff; margin-bottom: 6px; text-shadow: 1px 1px 3px #000; }
+        .testimonial-card span { font-size: 0.7rem; color: var(--gold-bright); font-weight: 600; }
+
+        .social-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; max-width: 450px; margin-bottom: 20px; }
+        .social-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #fff; 
+            background: var(--glass);
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-left: 4px solid var(--gold-bright);
+            transition: 0.3s;
+            backdrop-filter: blur(10px);
+            text-shadow: 1px 1px 4px #000;
+            /* Neón suave detrás de cada botón */
+            box-shadow: 0 0 12px rgba(74, 222, 128, 0.1);
+        }
+        .social-item:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 0 20px var(--soft-neon-green);
+            border-color: var(--mystic-green);
+        }
+        .social-item img { width: 18px; margin-right: 10px; }
+        .social-item span { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; }
+
+        @media (max-width: 768px) {
+            .magic-viewport { width: 260px; height: 260px; }
+            .ring-outer { width: 240px; height: 240px; }
+            .ring-inner { width: 210px; height: 210px; }
+            .main-logo { width: 150px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background"></div>
+    <div class="overlay"></div>
+    <div id="gold-rain" class="gold-rain-container"></div>
+
+    <div class="main-container">
+        
+        <div class="magic-viewport">
+            <div class="magic-ring ring-outer"></div>
+            <div class="magic-ring ring-inner"></div>
+            <img src="https://i.postimg.cc/DwV1wvth/Copia-de-Diseno-sin-titulo-(3).png" alt="Logo Tibetano" class="main-logo">
+        </div>
+
+        <div class="section-tag">Testimonios</div>
+        <div id="testimonial-area"></div>
+
+        <div class="section-tag">Nuestras Redes</div>
+        <div class="social-layout">
+            <a href="https://wa.me/593981543139" target="_blank" class="social-item">
+                <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WA">
+                <span>WHATSAPP</span>
+            </a>
+            <a href="https://www.instagram.com/alfredotibetano" target="_blank" class="social-item">
+                <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="IG">
+                <span>INSTAGRAM</span>
+            </a>
+            <a href="https://www.tiktok.com/@tibetanocadenanaturista" target="_blank" class="social-item">
+                <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TK">
+                <span>TIKTOK</span>
+            </a>
+            <a href="https://www.facebook.com/share/1DuUVs1REa/" target="_blank" class="social-item">
+                <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="FB">
+                <span>FACEBOOK</span>
+            </a>
+        </div>
+
+        <p class="phrase" id="quote-zen"></p>
+    </div>
+
+    <div id="player"></div>
+
+    <script>
+        const rainContainer = document.getElementById('gold-rain');
+        for (let i = 0; i < 30; i++) {
+            const p = document.createElement('div');
+            p.className = 'gold-particle';
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.animationDuration = (Math.random() * 4 + 6) + 's';
+            p.style.animationDelay = Math.random() * 5 + 's';
+            rainContainer.appendChild(p);
+        }
+
+        const testimonios = [
+            { txt: "¡Increíble cambio! Mis niveles de energía subieron desde la primera semana.", autor: "María G. - Quito" },
+            { txt: "La mejor medicina natural. Sus productos sanan desde adentro hacia afuera.", autor: "Carlos R. - Guayaquil" },
+            { txt: "Excelente atención y los tónicos son mágicos. Recomendado al 100%.", autor: "Lucía M. - Cuenca" },
+            { txt: "Encontré la paz y salud que buscaba. Gracias al equipo de Tibetano.", autor: "Jorge L. - Ambato" },
+            { txt: "Productos puros y efectivos. Un antes y un después en mi salud.", autor: "Elena P. - Manta" }
+        ];
+
+        const frases = [
+            "\"La verdadera paz nace de tu interior.\"",
+            "\"El bienestar natural es el equilibrio del alma.\"",
+            "\"Tu cuerpo es tu templo, cuídalo con lo que la tierra nos regala.\""
+        ];
+
+        window.onload = () => {
+            const t = testimonios[Math.floor(Math.random() * testimonios.length)];
+            document.getElementById('testimonial-area').innerHTML = `
+                <div class="testimonial-card">
+                    <p>"${t.txt}"</p>
+                    <span>— ${t.autor}</span>
+                </div>
+            `;
+            document.getElementById('quote-zen').innerText = frases[Math.floor(Math.random() * frases.length)];
+        };
+
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '0', width: '0', videoId: '22i6SofLVRY',
+                playerVars: { 'autoplay': 1, 'loop': 1, 'playlist': '22i6SofLVRY', 'start': 352 },
+                events: { 'onReady': (e) => { 
+                    e.target.playVideo();
+                    document.body.addEventListener('click', () => player.playVideo(), {once:true});
+                }}
+            });
+        }
+    </script>
+</body>
+</html>
