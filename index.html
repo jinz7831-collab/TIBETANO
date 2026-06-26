@@ -3,297 +3,693 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alfredo Tibetano | Energía Mística Zen</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    
+    <title>Tibetano FM | En Vivo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --gold-mystic: #c9a15c; 
-            --gold-bright: #ffea00;
-            --soft-neon-green: rgba(74, 222, 128, 0.25); /* Verde neón extra suave */
-            --mystic-green: #4ade80; 
-            --glass: rgba(0, 0, 0, 0.75);
+        /* Estilos Globales - Estética de Alta Gama */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html {
+            scroll-behavior: smooth;
+        }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #000;
-            color: white;
-            overflow-x: hidden;
+            background: linear-gradient(rgba(10, 10, 12, 0.85), rgba(5, 5, 7, 0.95)), 
+                        url('https://images.unsplash.com/photo-1589308078059-be1415eab4c3?q=80&w=1200&auto=format&fit=crop') no-repeat center center fixed;
+            background-size: cover;
+            color: #f4f4f5;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, #d4af37 50%, #0f2d59 25%, #8c1d1d 25%);
+            z-index: 1000;
+            opacity: 0.8;
+        }
+
+        /* Barra de Navegación Premium */
+        header {
+            width: 100%;
+            background: rgba(10, 10, 12, 0.8);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 25px 50px;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
         }
 
-        /* --- FONDOS --- */
-        .background {
-            position: fixed;
-            inset: 0;
-            background: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070') center/cover no-repeat;
-            z-index: -3;
+        /* LOGO INTERACTIVO COMO DETONADOR ADMINISTRATIVO */
+        .logo {
+            animation: logoEntrada 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            cursor: pointer; /* Hace evidente que se puede presionar */
+            user-select: none;
         }
 
-        .overlay {
-            position: fixed;
-            inset: 0;
-            background: radial-gradient(circle, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.95) 100%);
-            z-index: -2;
+        .logo h1 {
+            font-size: 2rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #ffe066 0%, #d4af37 50%, #f59e0b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.15);
         }
 
-        /* --- ORO CAYENDO --- */
-        .gold-rain-container {
-            position: fixed;
-            inset: 0;
-            z-index: -1;
-            pointer-events: none;
-            opacity: 0.25;
+        .logo p {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: #a1a1aa;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            margin-top: 2px;
         }
 
-        .gold-particle {
-            position: absolute;
-            top: -10vh;
-            width: 3px;
-            height: 3px;
-            background: #fff;
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--gold-bright);
-            animation: fallGold linear infinite;
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            list-style: none;
         }
 
-        @keyframes fallGold {
-            0% { transform: translateY(0vh) rotate(0deg) scale(0.5); opacity: 0; }
-            10% { opacity: 1; }
-            100% { transform: translateY(110vh) rotate(360deg) scale(1); opacity: 0; }
-        }
-
-        .main-container {
+        .nav-links a {
+            color: #a1a1aa;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.4s ease;
             position: relative;
-            z-index: 10;
+            padding-bottom: 4px;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #d4af37;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #d4af37;
+        }
+
+        /* Contenedor de Estructura Principal */
+        .web-container {
+            max-width: 1250px;
+            width: 100%;
+            margin: 50px auto;
+            padding: 0 25px;
+            display: grid;
+            grid-template-columns: 1.8fr 1.2fr;
+            gap: 50px;
+            flex: 1;
+        }
+
+        /* SECCIÓN PRINCIPAL: El Arte Visual del Reproductor */
+        .main-broadcast {
+            background: linear-gradient(145deg, rgba(15, 15, 20, 0.85) 0%, rgba(5, 5, 8, 0.95) 100%);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 24px;
+            padding: 50px;
             display: flex;
             flex-direction: column;
+            justify-content: center;
             align-items: center;
-            padding: 5px 20px;
-            width: 100%;
-            max-width: 800px;
+            position: relative;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.7);
+            scroll-margin-top: 140px;
         }
 
-        /* --- ANILLOS MÁGICOS --- */
-        .magic-viewport {
+        .station-art-cover {
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), 
+                        url('https://images.unsplash.com/photo-1589308078059-be1415eab4c3?q=80&w=400&auto=format&fit=crop');
+            background-size: cover;
+            border: 4px solid #1c1917;
+            box-shadow: 0 0 40px rgba(212, 175, 55, 0.2), 0 20px 40px rgba(0,0,0,0.6);
+            margin-bottom: 40px;
             position: relative;
-            width: 320px;
-            height: 320px;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-bottom: -10px;
         }
 
-        .magic-ring {
+        .station-art-cover::before {
+            content: '';
             position: absolute;
+            width: 105%;
+            height: 105%;
             border-radius: 50%;
-            background: transparent;
-            background-image: conic-gradient(transparent, var(--gold-bright), var(--gold-mystic), transparent 70%);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: destination-out;
-            mask-composite: exclude;
+            border: 1px dashed rgba(212, 175, 55, 0.4);
+            animation: rotarArte 30s linear infinite;
+        }
+
+        .inner-brand-symbol {
+            font-size: 4.5rem;
+            font-weight: 900;
+            color: rgba(212, 175, 55, 0.75);
+            text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            user-select: none;
+        }
+
+        .live-indicator {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            display: flex;
+            align-items: center;
+            background: rgba(140, 29, 29, 0.25);
+            border: 1px solid #8c1d1d;
+            color: #f87171;
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 0.65rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .live-indicator .pulse-dot {
+            width: 7px;
+            height: 7px;
+            background-color: #ef4444;
+            border-radius: 50%;
+            margin-right: 10px;
+            animation: pulse 1.8s infinite;
+        }
+
+        .station-info {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .station-info h2 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+            color: #ffffff;
+        }
+
+        .station-info p {
+            color: #d4af37;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+        }
+
+        /* Controles de Consola */
+        .audio-controls {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+            width: 100%;
+            max-width: 440px;
+            background: rgba(10, 10, 12, 0.9);
+            padding: 22px 35px;
+            border-radius: 100px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-play {
+            background: #d4af37;
+            border: none;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-play:hover {
+            transform: scale(1.05);
+            background: #ffe066;
+        }
+
+        .btn-play svg {
+            width: 26px;
+            height: 26px;
+            fill: #0a0a0c;
+        }
+
+        .pause-icon {
+            display: none;
+        }
+
+        .volume-box {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .volume-box svg {
+            width: 22px;
+            height: 22px;
+            fill: #71717a;
+        }
+
+        .volume-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 2px;
+            outline: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #d4af37;
+            cursor: pointer;
+        }
+
+        /* BARRA LATERAL */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .panel-box {
+            background: linear-gradient(145deg, rgba(15, 15, 20, 0.8) 0%, rgba(5, 5, 8, 0.9) 100%);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            scroll-margin-top: 140px;
+        }
+
+        .panel-box h3 {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            color: #d4af37;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            padding-bottom: 12px;
+        }
+
+        .show-item {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 16px 0;
+            border-bottom: 1px dashed rgba(212, 175, 55, 0.15);
+        }
+
+        .show-item:last-child {
+            border-bottom: none;
+        }
+
+        .show-day {
+            font-size: 0.8rem;
+            color: #ffe066;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .show-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #e4e4e7;
+        }
+
+        .social-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .social-btn {
+            background: rgba(10, 10, 12, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 16px;
+            border-radius: 12px;
+            text-align: center;
+            color: #a1a1aa;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .social-btn.whatsapp-personal {
+            border-color: #25d366;
+            background: rgba(37, 211, 102, 0.03);
+            color: #25d366;
+        }
+
+        .social-btn.whatsapp-personal:hover {
+            background: #25d366;
+            color: #0a0a0c;
+        }
+
+        .social-btn.whatsapp-corporativo {
+            border-color: #d4af37;
+            background: rgba(212, 175, 55, 0.03);
+            color: #d4af37;
+        }
+
+        .social-btn.whatsapp-corporativo:hover {
+            background: #d4af37;
+            color: #0a0a0c;
+        }
+
+        .social-btn.disabled {
+            opacity: 0.2;
+            cursor: not-allowed;
             pointer-events: none;
         }
 
-        .ring-outer { width: 300px; height: 300px; border: 4px solid transparent; animation: rotateRight 25s linear infinite; }
-        .ring-inner { width: 260px; height: 260px; border: 3px solid transparent; animation: rotateLeft 18s linear infinite; }
-
-        @keyframes rotateRight { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        @keyframes rotateLeft { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
-
-        .main-logo {
-            position: relative;
-            z-index: 5;
-            width: 190px;
-            height: auto;
-            filter: drop-shadow(0 0 20px rgba(255, 234, 0, 0.6)) brightness(1.2);
-            animation: logoAppear 2s ease-out forwards;
+        /* PANEL EDITABLE ADMINISTRATIVO INLINE */
+        #adminPanel {
+            display: none;
+            background: #111115;
+            border: 2px solid #d4af37;
+            border-radius: 16px;
+            padding: 25px;
+            margin-top: 20px;
         }
 
-        /* --- CABECERAS CON NEÓN VERDE SUAVEEEEE --- */
-        .section-tag {
-            background: rgba(255, 255, 255, 0.08); 
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 5px 25px;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            letter-spacing: 3px;
-            color: #fff;
+        #adminPanel h4 {
+            color: #d4af37;
+            margin-bottom: 15px;
             text-transform: uppercase;
-            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .admin-row {
             margin-bottom: 12px;
-            backdrop-filter: blur(5px);
-            /* Sombra negra para legibilidad y Neón Verde muy suave detrás */
-            text-shadow: 1px 1px 2px #000;
-            box-shadow: 0 0 15px var(--soft-neon-green), inset 0 0 8px var(--soft-neon-green);
-        }
-
-        /* --- FRASE CON NEÓN VERDE --- */
-        .phrase {
-            font-size: 1rem;
-            font-style: italic;
-            color: #fff; 
-            text-align: center;
-            padding-bottom: 30px;
-            max-width: 500px;
-            text-shadow: 0 0 10px var(--mystic-green), 0 0 20px rgba(74, 222, 128, 0.4);
-            animation: auraPulse 3s infinite alternate;
-        }
-
-        @keyframes auraPulse {
-            from { text-shadow: 0 0 8px var(--mystic-green); }
-            to { text-shadow: 0 0 15px var(--mystic-green), 0 0 25px rgba(74, 222, 128, 0.6); }
-        }
-
-        /* TESTIMONIOS Y REDES CON AURA VERDE SUAVE */
-        #testimonial-area { width: 100%; max-width: 600px; margin-bottom: 25px; text-align: center; }
-        .testimonial-card {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-left: 4px solid var(--gold-bright);
-            padding: 15px 20px;
-            border-radius: 12px;
-            /* Neón suave detrás de la caja */
-            box-shadow: 0 5px 20px rgba(74, 222, 128, 0.15);
-        }
-        .testimonial-card p { font-size: 0.88rem; font-style: italic; color: #fff; margin-bottom: 6px; text-shadow: 1px 1px 3px #000; }
-        .testimonial-card span { font-size: 0.7rem; color: var(--gold-bright); font-weight: 600; }
-
-        .social-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; max-width: 450px; margin-bottom: 20px; }
-        .social-item {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            color: #fff; 
-            background: var(--glass);
-            padding: 12px;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-left: 4px solid var(--gold-bright);
-            transition: 0.3s;
-            backdrop-filter: blur(10px);
-            text-shadow: 1px 1px 4px #000;
-            /* Neón suave detrás de cada botón */
-            box-shadow: 0 0 12px rgba(74, 222, 128, 0.1);
+            flex-direction: column;
+            gap: 5px;
+            text-align: left;
         }
-        .social-item:hover { 
-            transform: translateY(-2px); 
-            box-shadow: 0 0 20px var(--soft-neon-green);
-            border-color: var(--mystic-green);
-        }
-        .social-item img { width: 18px; margin-right: 10px; }
-        .social-item span { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; }
 
-        @media (max-width: 768px) {
-            .magic-viewport { width: 260px; height: 260px; }
-            .ring-outer { width: 240px; height: 240px; }
-            .ring-inner { width: 210px; height: 210px; }
-            .main-logo { width: 150px; }
+        .admin-row label {
+            font-size: 0.75rem;
+            color: #a1a1aa;
+            font-weight: 600;
+        }
+
+        .admin-row input {
+            background: #1f1f23;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 10px;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 0.85rem;
+            outline: none;
+        }
+
+        .admin-row input:focus {
+            border-color: #d4af37;
+        }
+
+        .btn-save {
+            background: #d4af37;
+            color: #000;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            margin-top: 10px;
+        }
+
+        /* Footer */
+        footer {
+            background: #050507;
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+            padding: 35px;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #52525b;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* KEYFRAMES */
+        @keyframes logoEntrada {
+            0% { transform: scale(0.95) translateY(-15px); opacity: 0; filter: blur(10px); }
+            100% { transform: scale(1) translateY(0); opacity: 1; filter: blur(0); }
+        }
+
+        @keyframes rotarArte {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.9); opacity: 0.4; }
+            50% { transform: scale(1.25); opacity: 1; }
+            100% { transform: scale(0.9); opacity: 0.4; }
+        }
+
+        @media (max-width: 950px) {
+            .web-container { grid-template-columns: 1fr; gap: 35px; }
+            header { padding: 20px; flex-direction: column; gap: 20px; }
+            .main-broadcast { padding: 35px 20px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="background"></div>
-    <div class="overlay"></div>
-    <div id="gold-rain" class="gold-rain-container"></div>
+    <header>
+        <div class="logo" onclick="loginAdmin()">
+            <h1>Tibetano <strong>FM</strong></h1>
+            <p>Ecuador Digital</p>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#inicio" class="active" onclick="setActive(this)">Inicio</a></li>
+            <li><a href="#programacion" onclick="setActive(this)">Programación</a></li>
+            <li><a href="#contacto" onclick="setActive(this)">Contacto</a></li>
+        </ul>
+    </header>
 
-    <div class="main-container">
+    <div class="web-container">
         
-        <div class="magic-viewport">
-            <div class="magic-ring ring-outer"></div>
-            <div class="magic-ring ring-inner"></div>
-            <img src="https://i.postimg.cc/DwV1wvth/Copia-de-Diseno-sin-titulo-(3).png" alt="Logo Tibetano" class="main-logo">
-        </div>
+        <section class="main-broadcast" id="inicio">
+            <div class="live-indicator">
+                <span class="pulse-dot"></span>
+                En Vivo
+            </div>
 
-        <div class="section-tag">Testimonios</div>
-        <div id="testimonial-area"></div>
+            <div class="station-art-cover">
+                <div class="inner-brand-symbol">🇪🇨</div>
+            </div>
 
-        <div class="section-tag">Nuestras Redes</div>
-        <div class="social-layout">
-            <a href="https://wa.me/593981543139" target="_blank" class="social-item">
-                <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WA">
-                <span>WHATSAPP</span>
-            </a>
-            <a href="https://www.instagram.com/alfredotibetano" target="_blank" class="social-item">
-                <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="IG">
-                <span>INSTAGRAM</span>
-            </a>
-            <a href="https://www.tiktok.com/@tibetanocadenanaturista" target="_blank" class="social-item">
-                <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TK">
-                <span>TIKTOK</span>
-            </a>
-            <a href="https://www.facebook.com/share/1DuUVs1REa/" target="_blank" class="social-item">
-                <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="FB">
-                <span>FACEBOOK</span>
-            </a>
-        </div>
+            <div class="station-info">
+                <h2>Señal de Alta Gama</h2>
+                <p>Estación Oficial</p>
+            </div>
 
-        <p class="phrase" id="quote-zen"></p>
+            <div class="audio-controls">
+                <button class="btn-play" id="playBtn" onclick="togglePlay()">
+                    <svg class="play-icon" viewBox="0 0 24 24" id="playIcon">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                    <svg class="pause-icon" viewBox="0 0 24 24" id="pauseIcon">
+                        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                    </svg>
+                </button>
+                <div class="volume-box">
+                    <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    <input type="range" class="volume-slider" id="volume" min="0" max="1" step="0.05" value="0.8" oninput="changeVolume(this.value)">
+                </div>
+            </div>
+        </section>
+
+        <aside class="sidebar">
+            
+            <div class="panel-box" id="programacion">
+                <h3>Agenda de Emisión</h3>
+                <div class="show-item">
+                    <span class="show-day">Lunes, Sábado y Domingo</span>
+                    <span class="show-title" id="txtFin">Música Continua (24 Horas Sin Cortes)</span>
+                </div>
+                <div class="show-item">
+                    <span class="show-day">Martes a Viernes (Mañana)</span>
+                    <span class="show-title" id="txtMartesM">Resumen de Noticias Nacionales (08:00 AM)</span>
+                </div>
+                <div class="show-item">
+                    <span class="show-day">Martes a Viernes (Tarde)</span>
+                    <span class="show-title" id="txtMartesT">Informativo de Noticias Generales</span>
+                </div>
+                <div class="show-item">
+                    <span class="show-day">Martes a Viernes (Intermedio)</span>
+                    <span class="show-title" id="txtMartesI">Música a Pedido (Bloques Interactivos)</span>
+                </div>
+
+                <div id="adminPanel">
+                    <h4>Panel Joan (Modificar Agenda)</h4>
+                    <div class="admin-row">
+                        <label>Lunes, Sábado y Domingo:</label>
+                        <input type="text" id="inputFin" value="Música Continua (24 Horas Sin Cortes)">
+                    </div>
+                    <div class="admin-row">
+                        <label>Martes a Viernes (Mañana):</label>
+                        <input type="text" id="inputMartesM" value="Resumen de Noticias Nacionales (08:00 AM)">
+                    </div>
+                    <div class="admin-row">
+                        <label>Martes a Viernes (Tarde):</label>
+                        <input type="text" id="inputMartesT" value="Informativo de Noticias Generales">
+                    </div>
+                    <div class="admin-row">
+                        <label>Martes a Viernes (Intermedio):</label>
+                        <input type="text" id="inputMartesI" value="Música a Pedido (Bloques Interactivos)">
+                    </div>
+                    <button class="btn-save" onclick="saveProgramacion()">Guardar Cambios</button>
+                </div>
+            </div>
+
+            <div class="panel-box" id="contacto">
+                <h3>Canales de Atención</h3>
+                <div class="social-grid">
+                    <a href="https://wa.me/593959574247" target="_blank" class="social-btn whatsapp-personal">
+                        Línea Directa (Pedidos)
+                    </a>
+                    <a href="https://wa.me/593981543139" target="_blank" class="social-btn whatsapp-corporativo">
+                        Cabina Tibetano (Publicidad)
+                    </a>
+                    <a href="#" class="social-btn disabled">Facebook</a>
+                    <a href="#" class="social-btn disabled">Instagram</a>
+                </div>
+            </div>
+
+        </aside>
+
     </div>
 
-    <div id="player"></div>
+    <footer>
+        <p>&copy; 2026 TIBETANO FM | Radiodifusión Digital desde Ecuador. Todos los derechos reservados.</p>
+    </footer>
+
+    <audio id="radioStream" src="https://stream.zenomedia.com/jnbjvqtrdqmuv" preload="auto" autoplay></audio>
 
     <script>
-        const rainContainer = document.getElementById('gold-rain');
-        for (let i = 0; i < 30; i++) {
-            const p = document.createElement('div');
-            p.className = 'gold-particle';
-            p.style.left = Math.random() * 100 + 'vw';
-            p.style.animationDuration = (Math.random() * 4 + 6) + 's';
-            p.style.animationDelay = Math.random() * 5 + 's';
-            rainContainer.appendChild(p);
+        const audio = document.getElementById('radioStream');
+        const playIcon = document.getElementById('playIcon');
+        const pauseIcon = document.getElementById('pauseIcon');
+
+        window.addEventListener('DOMContentLoaded', () => {
+            audio.volume = 0.8;
+            let playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    playIcon.style.display = 'none';
+                    pauseIcon.style.display = 'block';
+                }).catch(e => console.log("Autoplay en espera."));
+            }
+            
+            if(localStorage.getItem('prog_fin')) {
+                document.getElementById('txtFin').innerText = localStorage.getItem('prog_fin');
+                document.getElementById('txtMartesM').innerText = localStorage.getItem('prog_mm');
+                document.getElementById('txtMartesT').innerText = localStorage.getItem('prog_mt');
+                document.getElementById('txtMartesI').innerText = localStorage.getItem('prog_mi');
+                
+                document.getElementById('inputFin').value = localStorage.getItem('prog_fin');
+                document.getElementById('inputMartesM').value = localStorage.getItem('prog_mm');
+                document.getElementById('inputMartesT').value = localStorage.getItem('prog_mt');
+                document.getElementById('inputMartesI').value = localStorage.getItem('prog_mi');
+            }
+        });
+
+        function togglePlay() {
+            if (audio.paused) {
+                const currentSrc = audio.src;
+                audio.src = ''; audio.src = currentSrc; audio.load();
+                audio.play();
+                playIcon.style.display = 'none'; pauseIcon.style.display = 'block';
+            } else {
+                audio.pause();
+                playIcon.style.display = 'block'; pauseIcon.style.display = 'none';
+            }
         }
 
-        const testimonios = [
-            { txt: "¡Increíble cambio! Mis niveles de energía subieron desde la primera semana.", autor: "María G. - Quito" },
-            { txt: "La mejor medicina natural. Sus productos sanan desde adentro hacia afuera.", autor: "Carlos R. - Guayaquil" },
-            { txt: "Excelente atención y los tónicos son mágicos. Recomendado al 100%.", autor: "Lucía M. - Cuenca" },
-            { txt: "Encontré la paz y salud que buscaba. Gracias al equipo de Tibetano.", autor: "Jorge L. - Ambato" },
-            { txt: "Productos puros y efectivos. Un antes y un después en mi salud.", autor: "Elena P. - Manta" }
-        ];
+        function changeVolume(value) { audio.volume = value; }
+        function setActive(element) {
+            const links = document.querySelectorAll('.nav-links a');
+            links.forEach(link => link.classList.remove('active'));
+            element.classList.add('active');
+        }
 
-        const frases = [
-            "\"La verdadera paz nace de tu interior.\"",
-            "\"El bienestar natural es el equilibrio del alma.\"",
-            "\"Tu cuerpo es tu templo, cuídalo con lo que la tierra nos regala.\""
-        ];
+        // SISTEMA DE CONTROL DIRECTO DESDE EL LOGO
+        function loginAdmin() {
+            const pass = prompt("Ingresa la contraseña de Administrador:");
+            if (pass === "2001") {
+                alert("Acceso Autorizado. El editor se ha habilitado en la barra de Programación.");
+                document.getElementById('adminPanel').style.display = 'block';
+                window.location.hash = 'programacion';
+            } else {
+                alert("Contraseña incorrecta.");
+            }
+        }
 
-        window.onload = () => {
-            const t = testimonios[Math.floor(Math.random() * testimonios.length)];
-            document.getElementById('testimonial-area').innerHTML = `
-                <div class="testimonial-card">
-                    <p>"${t.txt}"</p>
-                    <span>— ${t.autor}</span>
-                </div>
-            `;
-            document.getElementById('quote-zen').innerText = frases[Math.floor(Math.random() * frases.length)];
-        };
+        function saveProgramacion() {
+            const fin = document.getElementById('inputFin').value;
+            const mm = document.getElementById('inputMartesM').value;
+            const mt = document.getElementById('inputMartesT').value;
+            const mi = document.getElementById('inputMartesI').value;
 
-        var tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-        var player;
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('player', {
-                height: '0', width: '0', videoId: '22i6SofLVRY',
-                playerVars: { 'autoplay': 1, 'loop': 1, 'playlist': '22i6SofLVRY', 'start': 352 },
-                events: { 'onReady': (e) => { 
-                    e.target.playVideo();
-                    document.body.addEventListener('click', () => player.playVideo(), {once:true});
-                }}
-            });
+            localStorage.setItem('prog_fin', fin);
+            localStorage.setItem('prog_mm', mm);
+            localStorage.setItem('prog_mt', mt);
+            localStorage.setItem('prog_mi', mi);
+
+            document.getElementById('txtFin').innerText = fin;
+            document.getElementById('txtMartesM').innerText = mm;
+            document.getElementById('txtMartesT').innerText = mt;
+            document.getElementById('txtMartesI').innerText = mi;
+
+            alert("Programación actualizada correctamente.");
+            document.getElementById('adminPanel').style.display = 'none';
         }
     </script>
 </body>
