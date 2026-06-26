@@ -10,7 +10,7 @@
         :root {
             --gold-mystic: #c9a15c; 
             --gold-bright: #ffea00;
-            --soft-neon-green: rgba(74, 222, 128, 0.25); 
+            --soft-neon-green: rgba(74, 222, 128, 0.25); /* Verde neón extra suave */
             --mystic-green: #4ade80; 
             --glass: rgba(0, 0, 0, 0.75);
         }
@@ -118,7 +118,7 @@
             animation: logoAppear 2s ease-out forwards;
         }
 
-        /* --- CABECERAS --- */
+        /* --- CABECERAS CON NEÓN VERDE SUAVEEEEE --- */
         .section-tag {
             background: rgba(255, 255, 255, 0.08); 
             border: 1px solid rgba(255, 255, 255, 0.3);
@@ -131,6 +131,7 @@
             font-weight: 600;
             margin-bottom: 12px;
             backdrop-filter: blur(5px);
+            /* Sombra negra para legibilidad y Neón Verde muy suave detrás */
             text-shadow: 1px 1px 2px #000;
             box-shadow: 0 0 15px var(--soft-neon-green), inset 0 0 8px var(--soft-neon-green);
         }
@@ -152,7 +153,7 @@
             to { text-shadow: 0 0 15px var(--mystic-green), 0 0 25px rgba(74, 222, 128, 0.6); }
         }
 
-        /* TESTIMONIOS Y REDES */
+        /* TESTIMONIOS Y REDES CON AURA VERDE SUAVE */
         #testimonial-area { width: 100%; max-width: 600px; margin-bottom: 25px; text-align: center; }
         .testimonial-card {
             background: var(--glass);
@@ -161,6 +162,7 @@
             border-left: 4px solid var(--gold-bright);
             padding: 15px 20px;
             border-radius: 12px;
+            /* Neón suave detrás de la caja */
             box-shadow: 0 5px 20px rgba(74, 222, 128, 0.15);
         }
         .testimonial-card p { font-size: 0.88rem; font-style: italic; color: #fff; margin-bottom: 6px; text-shadow: 1px 1px 3px #000; }
@@ -181,6 +183,7 @@
             transition: 0.3s;
             backdrop-filter: blur(10px);
             text-shadow: 1px 1px 4px #000;
+            /* Neón suave detrás de cada botón */
             box-shadow: 0 0 12px rgba(74, 222, 128, 0.1);
         }
         .social-item:hover { 
@@ -190,48 +193,6 @@
         }
         .social-item img { width: 18px; margin-right: 10px; }
         .social-item span { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; }
-
-        /* --- BOTÓN FLOTANTE MÚSICA --- */
-        .music-toggle {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 100;
-            background: rgba(0, 0, 0, 0.85);
-            border: 2px solid var(--gold-bright);
-            box-shadow: 0 0 15px var(--gold-bright);
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            animation: pulseBtn 1.5s infinite;
-        }
-        @keyframes pulseBtn {
-            0% { transform: scale(1); box-shadow: 0 0 10px var(--gold-bright); }
-            50% { transform: scale(1.08); box-shadow: 0 0 20px var(--mystic-green); }
-            100% { transform: scale(1); box-shadow: 0 0 10px var(--gold-bright); }
-        }
-        .music-toggle svg { width: 24px; height: 24px; fill: #fff; }
-
-        .music-hint {
-            position: fixed;
-            bottom: 85px;
-            right: 20px;
-            background: rgba(0,0,0,0.9);
-            border: 1px solid var(--mystic-green);
-            color: #fff;
-            font-size: 0.75rem;
-            padding: 6px 12px;
-            border-radius: 8px;
-            z-index: 100;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            pointer-events: none;
-            box-shadow: 0 0 10px rgba(74, 222, 128, 0.4);
-        }
 
         @media (max-width: 768px) {
             .magic-viewport { width: 260px; height: 260px; }
@@ -281,23 +242,9 @@
         <p class="phrase" id="quote-zen"></p>
     </div>
 
-    <!-- REPRODUCTOR DE AUDIO DIRECTO HTML5 (LIBRE DE BLOQUEOS) -->
-    <!-- Música: Flauta de bambú zen relajante de alta calidad -->
-    <audio id="bg-audio" loop src="https://assets.mixkit.co/music/preview/mixkit-zen-meditation-bamboo-flute-567.mp3"></audio>
-
-    <!-- CARTEL INFORMATIVO -->
-    <div class="music-hint" id="music-hint">Toca la pantalla para escuchar 🔊</div>
-
-    <!-- BOTÓN DE CONTROL -->
-    <div class="music-toggle" id="btn-music" onclick="toggleAudio()">
-        <svg id="icon-music" viewBox="0 0 24 24">
-            <!-- Icono inicial: bocina apagada -->
-            <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
-        </svg>
-    </div>
+    <div id="player"></div>
 
     <script>
-        // ORO CAYENDO
         const rainContainer = document.getElementById('gold-rain');
         for (let i = 0; i < 30; i++) {
             const p = document.createElement('div');
@@ -333,37 +280,20 @@
             document.getElementById('quote-zen').innerText = frases[Math.floor(Math.random() * frases.length)];
         };
 
-        // --- SISTEMA INTERACTIVO IMPEDIBLE DE AUDIO ---
-        const audio = document.getElementById('bg-audio');
-        let musicPlaying = false;
-
-        // ESTE DISPARADOR REACCIONA AL INSTANTE CON CUALQUIER CLICK O TOQUE EN LA PANTALLA
-        const activarAudioMágico = () => {
-            if (!musicPlaying) {
-                audio.play().then(() => {
-                    musicPlaying = true;
-                    document.getElementById('music-hint').style.display = 'none';
-                    document.getElementById('icon-music').innerHTML = '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>'; // Cambia a bocina activa
-                }).catch(err => console.log("Esperando interacción real..."));
-            }
-        };
-
-        // Escuchar toques en absolutamente toda la página
-        document.body.addEventListener('click', activarAudioMágico);
-        document.body.addEventListener('touchstart', activarAudioMágico);
-
-        // Control manual desde el botón flotante por si quieren pausar
-        function toggleAudio() {
-            if (audio.paused) {
-                audio.play();
-                musicPlaying = true;
-                document.getElementById('music-hint').style.display = 'none';
-                document.getElementById('icon-music').innerHTML = '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>';
-            } else {
-                audio.pause();
-                musicPlaying = false;
-                document.getElementById('icon-music').innerHTML = '<path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>';
-            }
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '0', width: '0', videoId: '22i6SofLVRY',
+                playerVars: { 'autoplay': 1, 'loop': 1, 'playlist': '22i6SofLVRY', 'start': 352 },
+                events: { 'onReady': (e) => { 
+                    e.target.playVideo();
+                    document.body.addEventListener('click', () => player.playVideo(), {once:true});
+                }}
+            });
         }
     </script>
 </body>
